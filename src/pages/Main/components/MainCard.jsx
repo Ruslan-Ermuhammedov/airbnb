@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { FaRegHeart } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
 function MainCard({ item }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [iconVisible, setIconVisible] = useState(false);
-
+  const navigate = useNavigate()
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.images.length);
   };
@@ -15,6 +16,10 @@ function MainCard({ item }) {
     );
   };
 
+  const DetailPage = () => {
+    alert(item.id)
+    // navigate(`deteil/${item.id}`)
+  }
   return (
     <div className='flex flex-col gap-2 items-start'>
       <div
@@ -24,6 +29,7 @@ function MainCard({ item }) {
       >
         {item.images.map((image, index) => (
           <img
+            onClick={DetailPage}
             key={index}
             className={`absolute w-full h-full transition-transform duration-300 transform ${index === currentImageIndex ? 'opacity-100' : ' bg-'
               }`}
@@ -60,8 +66,8 @@ function MainCard({ item }) {
         <button
           onClick={nextImage}
           className={`bg-white hover:p-[9px] opacity-80 hover:opacity-90  hover:shadow-md hover:shadow-zinc-300 absolute ${!iconVisible || currentImageIndex === item.images.length - 1
-              ? 'hidden'
-              : ''
+            ? 'hidden'
+            : ''
             } left-[275px] top-36 text-white px-2 py-2 rounded-[100%] cursor-pointer`}
         >
           <svg
